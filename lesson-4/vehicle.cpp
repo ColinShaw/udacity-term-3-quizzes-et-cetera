@@ -34,8 +34,39 @@ void Vehicle::update_state(map<int,vector<vector<int>>> predictions) {
      *   }
      */
 
-    
+    // Some local variables 
+    int current_lane = this->lane;
+    int current_s    = this->s;
+    int current_v    = this->v;
 
+    // A dictionary of all vehicles to associate costs
+    map<int, map<int, float>>  = {{ 1, {1, 1.0}, {2, 0.5}};
+
+    // Make an iterator 
+    map<int, vector<vector<int>>>::iterator it = predictions.begin();
+
+    // Go through the vehicle list 
+    while(it != predictions.end())
+    {
+    	int                 vehicle_id = it->first;
+        vector<vector<int>> v          = it->second;
+
+        // Determine other vehicle's current lane
+
+        // Determine other vehicle's current position
+
+        // Determine other vehicle's estimate of velocity 
+
+        // Compute a cost for each vehicle
+        float cost = 0.5;
+        costs[i] = cost;
+
+        it++;
+    }
+
+    // Sort the costs dictionary by cost and find the vehicle it is associated with
+
+    // Set the state as appropriate
     state = "KL"; 
 }
 
