@@ -1,4 +1,3 @@
-#include <iostream>
 #include "vehicle.h"
 #include <iostream>
 #include <math.h>
