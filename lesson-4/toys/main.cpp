@@ -8,19 +8,23 @@
 
 using namespace std;
 
-    /*  predictions is a dictionary like this:
-     *   {
-     *     3 : [
-     *       {"s" : 4, "lane": 0},
-     *       {"s" : 6, "lane": 0},
-     *       {"s" : 8, "lane": 0},
-     *       {"s" : 10, "lane": 0},
-     *     ]
-     *   }
-     */
+/*  predictions is a dictionary like this:
+ *   {
+ *     3 : [
+ *       {"s" : 4, "lane": 0},
+ *       {"s" : 6, "lane": 0},
+ *       {"s" : 8, "lane": 0},
+ *       {"s" : 10, "lane": 0},
+ *     ]
+ *   }
+ */
 
 int main ()
 {
+    // Current state
+    string state = "KL";
+    int    lane  = 1;
+
     // Map of possible car operations and initial costs
     map<string, float> costs = { 
                                  {"KL",   0.0},
@@ -109,7 +113,7 @@ int main ()
     // Find the minimum in our costs map
     string cost_name;
     float min_cost = 999.0;
-    map<string, float>::iterator costs_iter = costs.begin();
+    costs_iter = costs.begin();
     while (costs_iter != costs.end())
     {
         if (costs_iter->second < min_cost)
