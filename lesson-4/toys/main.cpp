@@ -49,14 +49,54 @@ int main ()
             int                 vehicle_id = pred_iter->first;
             vector<vector<int>> data       = pred_iter->second;
 
-            int position = data[0][0];
-            int lane     = data[0][1];
-            int speed    = data[1][0] - data[0][0]; 
+            int pred_position = data[0][0];
+            int pred_lane     = data[0][1];
+            int pred_speed    = data[1][0] - data[0][0]; 
 
             // Compute cost for the particular car move 
             float cost = 0.0;
             string move = costs_iter->first;
-                                  
+
+            if (move == "KL")
+            {
+                // Prioritizes staying in the lane
+                if (lane == pred_lane) cost = 0.0;
+                else                   cost = 1.0;
+                
+            }
+
+            if (move == "LCL")
+            {
+                // Prioritizes left lane stuff AND current move is NOT PLCL or PLCR
+                if (state == "PLCL" || state == "PLCR") cost = 1.0;
+                else if (lane > pred_lane)              cost = 0.0;
+                else                                    cost = 1.0;
+            }
+
+            if (move == "LCR")
+            {
+                // Prioritizes right lane stuff AND current move is NOT PLCL or PLCR
+                if (state == "PLCL" || state == "PLCR") cost = 1.0;
+                else if (lane < pred_lane)              cost = 0.0;
+                else                                    cost = 1.0;
+            }
+
+            if (move == "PLCL")
+            {
+                // Prioritizes left lane stuff AND current move is LCR
+                if (state != "LCL")        cost = 1.0;
+                else if (lane > pred_lane) cost = 0.0;
+                else                       cost = 1.0;
+            }
+
+            if (move == "PLCR")
+            {
+                // Prioritizes right lane stuff AND current move is LCR
+                if (state != "LCR")        cost = 1.0;
+                else if (lane < pred_lane) cost = 0.0;
+                else                       cost = 1.0;
+            }
+
             // Update the cost for this move
             costs[move] += cost;
 
@@ -66,10 +106,20 @@ int main ()
         costs_iter++;
     }
 
+    // Find the minimum in our costs map
+    string cost_name;
+    float min_cost = 999.0;
+    map<string, float>::iterator costs_iter = costs.begin();
+    while (costs_iter != costs.end())
+    {
+        if (costs_iter->second < min_cost)
+        {
+            min_cost = costs_iter->second;
+            cost_name = costs_iter->first; 
+        }
+        costs_iter++;
+    }
 
-    // Just some dumb stuff
-    map<string, int> test;
-    test["what"] = 10;
-    cout << test["what"] << endl;
+    cout << cost_name << endl;
 
 }
