@@ -2,6 +2,7 @@ import numpy as np
 import random
 from cost_functions import *
 from constants import *
+from pprint import pprint
 
 # TODO - tweak weights to existing cost functions
 WEIGHTED_COST_FUNCTIONS = [
@@ -82,7 +83,7 @@ def calculate_cost(trajectory, target_vehicle, delta, goal_t, predictions, cost_
         new_cost = weight * cf(trajectory, target_vehicle, delta, goal_t, predictions)
         cost += new_cost
         if verbose:
-            print "cost for {} is \t {}".format(cf.func_name, new_cost)
+            print("cost for {} is \t {}".format(cf.__name__, new_cost))
     return cost
 
 def perturb_goal(goal_s, goal_d):
