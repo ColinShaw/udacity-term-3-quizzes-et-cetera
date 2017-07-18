@@ -1,6 +1,8 @@
 # Lesson 3
 
-This is the lesson 3 project having to do with Gaussian naive Bayes classifiers.  Here is a nice link:
+This is the lesson 3 project having to do with Gaussian naive Bayes classifiers.  Here are some nice links:
+
+ * [Naive Bayes Classifier From Scratch](https://chrisalbon.com/machine-learning/naive_bayes_classifier_from_scratch.html)
 
  * [Naive Bayes for machine learning](http://machinelearningmastery.com/naive-bayes-for-machine-learning/)
 

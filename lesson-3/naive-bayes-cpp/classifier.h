@@ -14,6 +14,12 @@ public:
 
     vector<string> possible_labels = {"left","keep","right"};
     
+    map<string, double> label_map = {
+        {"left", 0.0},
+        {"keep", 0.0},
+        {"right", 0.0}
+    };
+    
     map<string, vector<double>> mu = { 
         {"left", {0.0, 0.0, 0.0, 0.0}},
         {"keep", {0.0, 0.0, 0.0, 0.0}},
