@@ -16,12 +16,12 @@ void GNB::train(vector<vector<double>> data, vector<string> labels)
     for (int i=0; i<labels.size(); i++)
     {
         string label = labels[i];
-        label_map[label] += 1.0; 
+        label_map[label] += 1.0;
     }
     label_map["left"] /= (double)labels.size();
     label_map["keep"] /= (double)labels.size();
     label_map["right"] /= (double)labels.size();
-
+    
     // Compute mu by label and attribute
     for (int i=0; i<labels.size(); i++)
     {
@@ -40,7 +40,7 @@ void GNB::train(vector<vector<double>> data, vector<string> labels)
         mu["right"][j] = total_for_mu["right"][j] / count["right"][j];
     }
     
-    // Compute standard deviation (for samples) by label and attribute   
+    // Compute variance (for samples) by label and attribute   
     for (int i=0; i<labels.size(); i++)
     {
         string label = labels[i];
@@ -62,10 +62,10 @@ void GNB::train(vector<vector<double>> data, vector<string> labels)
 
 string GNB::predict(vector<double> input)
 {
-    double highest_value = 0.0;
-    string highest_label = "";
-    
-    for (int i=0; i<possible_labels.size(); i++)
+	double highest_value = 0.0;
+	string highest_label = "";
+	
+	for (int i=0; i<possible_labels.size(); i++)
     {
         string label = possible_labels[i];
         double total = label_map[label];
@@ -74,11 +74,8 @@ string GNB::predict(vector<double> input)
             double v = input[j];
             double m = mu[label][j];
             double s = sigma[label][j];
-            cout << v << " - " << m << " - " << s << endl;
             total *= gaussian(v, m, s);
-            cout << total << endl;
         }
-        cout << endl;
         if (total > highest_value)
         {
             highest_value = total;
@@ -86,7 +83,7 @@ string GNB::predict(vector<double> input)
         }
     }
     
-    return highest_label;
+   	return highest_label;
 }
 
 double GNB::gaussian(double val, double mean, double sigma)
@@ -97,5 +94,3 @@ double GNB::gaussian(double val, double mean, double sigma)
     double ex = (val - mean) * (val - mean) / (2.0 * sigma * sigma);
     return exp(-1.0 * ex) / den;
 }
-    
-
