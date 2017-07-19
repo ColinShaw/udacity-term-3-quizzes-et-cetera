@@ -3,6 +3,7 @@
 #include <fstream>
 #include <math.h>
 #include <vector>
+#include <algorithm>
 #include "hybrid_breadth_first.h"
 
 using namespace std;
@@ -106,8 +107,14 @@ HBF::maze_path HBF::search(vector< vector<int> > grid, vector<double> start, vec
 
   while(!opened.empty())
   {
-    maze_s next = opened[0];      //grab first elment
-    opened.erase(opened.begin()); //pop first element
+    std::sort(opened.begin(), 
+              opened.end(), 
+              [this](maze_s i, maze_s j) 
+              { 
+                  return (i.f < j.f); 
+              });
+    maze_s next = opened[0]; 
+    opened.erase(opened.begin()); 
 
     int x = next.x;
     int y = next.y;
