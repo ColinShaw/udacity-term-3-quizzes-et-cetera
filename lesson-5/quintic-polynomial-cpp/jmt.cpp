@@ -9,27 +9,35 @@ using namespace std;
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
 
-vector<double> JMT(vector< double> start, vector <double> end, double T)
+vector<double> JMT(vector< double> start, vector <double> end, double t)
 {
-    MatrixXd A = MatrixXd(3, 3);
-    A <<   T*T*T,   T*T*T*T,  T*T*T*T*T,
-         3*T*T,   4*T*T*T,  5*T*T*T*T,
-         6*T,    12*T*T,   20*T*T*T;
-        
-    MatrixXd B = MatrixXd(3,1);     
-    B << end[0] - (start[0] + start[1]*T + 0.5*start[2]*T*T),
-         end[1] - (start[1] + start[2]*T),
+    MatrixXd A = MatrixXd(3,3);
+    VectorXd b = VectorXd(3);
+    VectorXd x = VectorXd(3);
+
+    double t2 = t * t;
+    double t3 = t * t2;
+    double t4 = t * t3;
+    double t5 = t * t4;
+
+    A <<   t3,    t4,    t5,
+         3*t2,  4*t3,  5*t4,
+         6*t,  12*t2, 20*t3;
+
+    b << end[0] - (start[0] + start[1] * t + 0.5 * start[2] * t2),
+         end[1] - (start[1] + start[2] * t),
          end[2] - start[2];
-                
-    MatrixXd Ai = A.inverse();
-    MatrixXd C = Ai*B;
-    
-    vector <double> result = {start[0], start[1], 0.5 * start[2]};
-    for(int i = 0; i < C.size(); i++)
-    {
-        result.push_back(C.data()[i]);
-    }
-    
+
+    x = A.inverse() * b;
+
+    double a0 = start[0];
+    double a1 = start[1];
+    double a2 = start[2] / 2.0;
+    double a3 = x[0];
+    double a4 = x[1];
+    double a5 = x[2];
+
+    vector<double>result = {a0, a1, a2, a3, a4, a5};    
     return result;
 }
 
