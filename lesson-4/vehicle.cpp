@@ -39,7 +39,9 @@ void Vehicle::update_state(map<int,vector<vector<int>>> predictions) {
     int current_v    = this->v;
 
     // A dictionary of all vehicles to associate costs
-    map<int, map<int, float>>  = {{ 1, {1, 1.0}, {2, 0.5}};
+    map<int, map<int, float> >  = {
+                                   { 1, {1, 1.0}, {2, 0.5}}
+                                 };
 
     // Make an iterator 
     map<int, vector<vector<int>>>::iterator it = predictions.begin();
